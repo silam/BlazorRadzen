@@ -1,0 +1,69 @@
+﻿@page "/weather"
+@inject HttpClient Http
+
+<PageTitle>Weather</PageTitle>
+
+<h1>Weather</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+<div class="container p-xl-5 p-lg-4 p-md-3 p-sm-2 ">
+    <div class="card p-1 shadow">
+
+    
+    @if (forecasts == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        
+
+        <RadzenDataGrid Data="@forecasts" AllowSorting="true" TItem="WeatherForecast"
+                        PageSize=10 
+                        AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Center"
+                        ShowPagingSummary="true" SelectionMode="DataGridSelectionMode.Single"
+                        AllowFiltering="true" AllowColumnResize="true" ColumnWidth="100px"
+                        AllowAlternatingRows="true">
+            <Columns>
+                <RadzenDataGridColumn TItem="WeatherForecast" Sortable="true" Property="Date" Filterable="true" Title="Date" TextAlign="TextAlign.Center"></RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="WeatherForecast" Sortable="true" Property="TemperatureC" Filterable="true" Title="TemperatureC" TextAlign="TextAlign.Center"></RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="WeatherForecast" Sortable="true" Property="TemperatureF" Filterable="true" Title="TemperatureF" TextAlign="TextAlign.Center"></RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="WeatherForecast" Sortable="true" Property="TemperatureC" Filterable="true" Title="TemperatureC" TextAlign="TextAlign.Center"></RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="WeatherForecast" Sortable="true" Property="TemperatureF" Filterable="true" Title="TemperatureF" TextAlign="TextAlign.Center"></RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="WeatherForecast" Sortable="true" Property="TemperatureC" Filterable="true" Title="TemperatureC" TextAlign="TextAlign.Center"></RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="WeatherForecast" Sortable="true" Property="TemperatureF" Filterable="true" Title="TemperatureF" TextAlign="TextAlign.Center"></RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="WeatherForecast" Sortable="true" Property="TemperatureC" Filterable="true" Title="TemperatureC" TextAlign="TextAlign.Center"></RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="WeatherForecast" Sortable="true" Property="TemperatureF" Filterable="true" Title="TemperatureF" TextAlign="TextAlign.Center"></RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="WeatherForecast" Sortable="true" Property="TemperatureC" Filterable="true" Title="TemperatureC" TextAlign="TextAlign.Center"></RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="WeatherForecast" Sortable="true" Property="TemperatureF" Filterable="true" Title="TemperatureF" TextAlign="TextAlign.Center"></RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="WeatherForecast" Sortable="true" Property="TemperatureC" Filterable="true" Title="TemperatureC" TextAlign="TextAlign.Center"></RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="WeatherForecast" Sortable="true" Property="TemperatureF" Filterable="true" Title="TemperatureF" TextAlign="TextAlign.Center"></RadzenDataGridColumn>
+
+                <RadzenDataGridColumn TItem="WeatherForecast" Sortable="true" Property="Summary" Filterable="true" Title="Summary" TextAlign="TextAlign.Center"></RadzenDataGridColumn>
+            </Columns>
+        </RadzenDataGrid>
+        }
+    </div>
+
+</div>
+
+@code {
+    private WeatherForecast[]? forecasts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
+    }
+
+    public class WeatherForecast
+    {
+        public DateOnly Date { get; set; }
+
+        public int TemperatureC { get; set; }
+
+        public string? Summary { get; set; }
+
+        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    }
+}
